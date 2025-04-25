@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пушин - Король Пушистости</title>
+    <link rel="icon" href="https://e1.pngegg.com/pngimages/925/681/png-clipart-pusheen-pusheen-sticker-thumbnail.png">
+    <style>
+        :root {
+            --primary-color: #ffb6c1;
+            --secondary-color: #fff0f5;
+            --accent-color: #ff69b4;
+            --text-color: #4b2c5e;
+        }
+        
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            animation: floatBubbles 15s linear infinite;
+        }
+        
+        @keyframes floatBubbles {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-5%, -5%) rotate(5deg); }
+            50% { transform: translate(5%, -10%) rotate(-5deg); }
+            75% { transform: translate(-5%, -5%) rotate(5deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            position: relative;
+            animation: fadeInDown 1s ease-out;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: white;
+            position: relative;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        nav {
+            background-color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-color);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        nav a:hover {
+            color: var(--accent-color);
+        }
+        
+        .hero {
+            height: 70vh;
+            background-image: url('https://placekitten.com/1920/1080');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            position: relative;
+            animation: heroZoom 20s infinite alternate;
+        }
+        
+        @keyframes heroZoom {
+            0% { background-position: center; background-size: 100%; }
+            100% { background-position: center; background-size: 110%; }
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(transparent, var(--secondary-color));
+        }
+        
+        .hero-text {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 20px;
+            max-width: 800px;
+            text-align: center;
+            z-index: 1;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+        
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--accent-color);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-color), transparent);
+            animation: underlineGrow 1s ease-out forwards;
+        }
+        
+        @keyframes underlineGrow {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .gallery-item {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: scale(0.95);
+            opacity: 0;
+            animation: galleryItemAppear 0.6s ease-out forwards;
+        }
+        
+        .gallery-item:nth-child(1) { animation-delay: 0.2s; }
+        .gallery-item:nth-child(2) { animation-delay: 0.4s; }
+        .gallery-item:nth-child(3) { animation-delay: 0.6s; }
+        .gallery-item:nth-child(4) { animation-delay: 0.8s; }
+        .gallery-item:nth-child(5) { animation-delay: 1.0s; }
+        .gallery-item:nth-child(6) { animation-delay: 1.2s; }
+        
+        @keyframes galleryItemAppear {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .facts {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .facts:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
+        }
+        
+        .fact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .fact-item:hover {
+            transform: translateX(10px);
+        }
+        
+        .fact-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            color: var(--accent-color);
+            transition: all 0.3s;
+        }
+        
+        .fact-item:hover .fact-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background-color: var(--accent-color);
+            transform: translateX(-50%);
+            animation: lineGrow 2s ease-out;
+        }
+        
+        @keyframes lineGrow {
+            from { height: 0; }
+            to { height: 100%; }
+        }
+        
+        .timeline-item {
+            padding: 1rem 2rem;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: all 0.5s;
+        }
+        
+        .timeline-item.visible {
+            opacity: 1;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            transform: translateX(-20px);
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            transform: translateX(20px);
+        }
+        
+        .timeline-item.visible:nth-child(odd),
+        .timeline-item.visible:nth-child(even) {
+            transform: translateX(0);
+        }
+        
+        .timeline-content {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .timeline-content:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transform: scale(1.02);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 10px solid white;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::after {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid white;
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .timeline-date::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-color);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        
+        .timeline-content:hover .timeline-date::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        .contact-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+            transform: perspective(1000px) rotateX(5deg);
+            transition: all 0.5s;
+        }
+        
+        .contact-form:hover {
+            transform: perspective(1000px) rotateX(0);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.2);
+            outline: none;
+            transform: translateY(-2px);
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+            transform: scale(0);
+            transition: transform 0.5s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #ff1493;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+        
+        .submit-btn:hover::after {
+            transform: scale(1);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 Q50,80 0,100 Z"></path></svg>');
+            background-size: 100% 50px;
+            background-repeat: no-repeat;
+            background-position: bottom;
+            animation: wave 10s linear infinite;
+        }
+        
+        @keyframes wave {
+            0% { background-position-x: 0; }
+            100% { background-position-x: 100%; }
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1rem 0;
+            position: relative;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .social-links a:hover {
+            transform: translateY(-5px) scale(1.2);
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .paw-print {
+            position: absolute;
+            font-size: 1rem;
+            opacity: 0.3;
+            animation: float 10s linear infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 20px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content::after,
+            .timeline-item:nth-child(even) .timeline-content::after {
+                left: -10px;
+                right: auto;
+                border-right: 10px solid white;
+                border-left: none;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>Пушин</h1>
+        <div class="subtitle">Самый пушистый и очаровательный котик во вселенной</div>
+    </header>
+    
+    <nav>
+        <a href="#about">О Пушине</a>
+        <a href="#gallery">Галерея</a>
+        <a href="#facts">Факты</a>
+        <a href="#story">История</a>
+        <a href="#contact">Контакты</a>
+    </nav>
+    
+    <section class="hero">
+        <div class="hero-text">
+            <h2>Добро пожаловать в мир Пушина!</h2>
+            <p>Этот удивительно пушистый комочек счастья покорил тысячи сердец по всему миру. На этом сайте вы узнаете все о его приключениях, привычках и невероятной пушистости!</p>
+        </div>
+    </section>
+    
+    <section id="about" class="section">
+        <h2 class="section-title">О Пушине</h2>
+        <div class="facts">
+            <p>Пушин — это не просто кот, это явление. Родившийся в семье обычных домашних кошек, он с первых дней показал, что его пушистость выходит за все возможные рамки.</p>
+            
+            <div class="fact-item">
+                <div class="fact-icon"><i class="fas fa-paw"></i></div>
+                <div>
+                    <h3>Порода</h3>
+                    <p>Настоящий дворянин — смесь сибирского кота и норвежской лесной кошки с добавлением волшебства.</p>
+                </div>
+            </div>
+            
+            <div class="fact-item">
+                <div class="fact-icon"><i class="fas fa-birthday-cake"></i></div>
+                <div>
+                    <h3>Возраст</h3>
+                    <p>3 года (по человеческим меркам), но уже достиг уровня мастерства в искусстве быть пушистым.</p>
+                </div>
+            </div>
+            
+            <div class="fact-item">
+                <div class="fact-icon"><i class="fas fa-heart"></i></div>
+                <div>
+                    <h3>Характер</h3>
+                    <p>Идеальное сочетание благородства и игривости. Любит спать на самых высоких местах и наблюдать за происходящим свысока.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="gallery" class="section" style="background-color: var(--secondary-color);">
+        <h2 class="section-title">Галерея Пушистости</h2>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto 2rem;">Запечатленные моменты величия самого пушистого создания на планете</p>
+        
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="https://www.fatline.com.ua/images/products/view2/stiker-pushin-spit.jpg" alt="Пушин спит">
+            </div>
+            <div class="gallery-item">
+                <img src="https://99px.ru/sstorage/86/2017/02/mid_20897_8686.jpg" alt="Пушин играет">
+            </div>
+            <div class="gallery-item">
+                <img src="https://static.wikia.nocookie.net/koshaki/images/a/a0/%D0%95%D1%81%D1%82.gif/revision/latest?cb=20150209142846&path-prefix=ru" alt="Пушин задумался">
+            </div>
+            <div class="gallery-item">
+                <img src="https://i.pinimg.com/564x/f4/5b/11/f45b119c08157b1e55bd76274dec372d.jpg" alt="Пушин в коробке">
+            </div>
+            <div class="gallery-item">
+                <img src="https://99px.ru/sstorage/86/2017/02/mid_20890_4611.jpg" alt="Пушин и цветы">
+            </div>
+            <div class="gallery-item">
+                <img src="https://avatars.dzeninfra.ru/get-zen_doc/229614/pub_59aad0fd77d0e6a03d66ca8d_59aad0ff1410c3acf5261245/scale_1200" alt="Пушин на прогулке">
+            </div>
+        </div>
+    </section>
+    
+    <section id="facts" class="section">
+        <h2 class="section-title">Удивительные факты</h2>
+        
+        <div class="facts">
+            <div class="fact-item">
+                <div class="fact-icon"><i class="fas fa-star"></i></div>
+                <div>
+                    <h3>Рекорд пушистости</h3>
+                    <p>Пушин официально признан самым пушистым котом в своем районе. Его шерсть достигает 10 см в длину!</p>
+                </div>
+            </div>
+            
+            <div class="fact-item">
+                <div class="fact-icon"><i class="fas fa-utensils"></i></div>
+                <div>
+                    <h3>Гастрономические предпочтения</h3>
+                    <p>Обожает лосось и креветки, но никогда не откажется от сметаны. Считает, что еда из человеческой тарелки вкуснее.</p>
+                </div>
+            </div>
+            
+            <div class="fact-item">
+                <div class="fact-icon"><i class="fas fa-magic"></i></div>
+                <div>
+                    <h3>Суперспособности</h3>
+                    <p>Может исчезнуть в самый неподходящий момент и появиться именно тогда, когда открывается холодильник.</p>
+                </div>
+            </div>
+            
+            <div class="fact-item">
+                <div class="fact-icon"><i class="fas fa-cloud"></i></div>
+                <div>
+                    <h3>Любимые места</h3>
+                    <p>Предпочитает спать на белых пушистых пледах, создавая иллюзию парящего в воздухе облака.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="story" class="section" style="background-color: var(--secondary-color);">
+        <h2 class="section-title">История Великого Пушина</h2>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">Весна 2020</div>
+                    <p>Пушин появляется на свет в семье обычных кошек. С первых дней его необычная пушистость привлекает внимание.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">Лето 2020</div>
+                    <p>Первое фото Пушина становится вирусным в Instagram. Начинается его восхождение к славе.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">Зима 2021</div>
+                    <p>Пушин побеждает на местном конкурсе "Самый пушистый кот". Эксперты отмечают его идеальные пропорции и качество шерсти.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">Весна 2022</div>
+                    <p>Запуск линейки товаров с изображением Пушина. Его лицо появляется на кружках, футболках и подушках.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">Настоящее время</div>
+                    <p>Пушин продолжает радовать своих поклонников новыми фото и видео. Его мечта — чтобы каждый человек на планете узнал о важности пушистости.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact" class="section">
+        <h2 class="section-title">Свяжитесь с Пушином</h2>
+        
+        <div class="contact-form">
+            <form>
+                <div class="form-group">
+                    <label for="name">Ваше имя</label>
+                    <input type="text" id="name" placeholder="Как к вам обращаться?">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Ваш email</label>
+                    <input type="email" id="email" placeholder="Для ответа Пушина">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Сообщение</label>
+                    <textarea id="message" placeholder="Напишите что-нибудь приятное Пушину"></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Отправить <i class="fas fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </section>
+    
+    <footer>
+        <h3>Подпишитесь на Пушина в соцсетях</h3>
+        
+        <div class="social-links">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+        
+        <p>© 2025 Мир Пушина. Все права защищены. Любое копирование материалов только с письменного разрешения Пушина.</p>
+        <p>Сайт создан с любовью и большим количеством шерсти.</p>
+    </footer>
+
+    <script>
+        // Анимация появления секций при скролле
+        const sections = document.querySelectorAll('.section');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Анимация для элементов временной шкалы
+                    if (entry.target.id === 'story') {
+                        const timelineItems = document.querySelectorAll('.timeline-item');
+                        timelineItems.forEach((item, index) => {
+                            setTimeout(() => {
+                                item.classList.add('visible');
+                            }, index * 200);
+                        });
+                    }
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Анимация следов лапок в футере
+        function createPawPrints() {
+            const footer = document.querySelector('footer');
+            const pawPrint = document.createElement('div');
+            pawPrint.innerHTML = '<i class="fas fa-paw"></i>';
+            pawPrint.classList.add('paw-print');
+            
+            // Случайная позиция по горизонтали
+            const leftPos = Math.random() * 100;
+            pawPrint.style.left = `${leftPos}%`;
+            
+            // Случайный размер
+            const size = Math.random() * 20 + 10;
+            pawPrint.style.fontSize = `${size}px`;
+            
+            // Случайная задержка анимации
+            const delay = Math.random() * 5;
+            pawPrint.style.animationDelay = `${delay}s`;
+            
+            footer.appendChild(pawPrint);
+            
+            // Удаляем след после завершения анимации
+            setTimeout(() => {
+                pawPrint.remove();
+            }, 10000);
+        }
+        
+        // Создаем следы каждые 300мс
+        setInterval(createPawPrints, 300);
+        
+        // Плавная прокрутка для навигации
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 20,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
